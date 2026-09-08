@@ -1,290 +1,95 @@
 {% extends 'base.html' %}
 
 {% block head %}
-    <script type="text/javascript" src="/static/js/jquery-ui.min.js"></script>
-	<script type="text/javascript" src="/static/js/slide.js"></script>
+<script type="text/javascript" src="/static/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/static/js/slide.js"></script>
 {% endblock head %}
 
 {% block center_body %}
+<div class="navbar_con">
+    <div class="navbar">
+        <h1 class="fl">校园优选分类</h1>
+        <ul class="navlist fl">
+            <li><a href="{% url 'df_goods:index' %}">首页</a></li>
+            <li class="interval">|</li>
+            <li><a href="#catalog">校园配送</a></li>
+            <li class="interval">|</li>
+            <li><a href="#service">品质保障</a></li>
+        </ul>
+    </div>
+</div>
 
-	<div class="navbar_con">
-		<div class="navbar">
-			<h1 class="fl">全部商品分类</h1>
-			<ul class="navlist fl">
-				<li><a href="{% url "df_goods:index" %}">首页</a></li>
-				<li class="interval">|</li>
-				<li><a href="#">手机生鲜</a></li>
-				<li class="interval">|</li>
-				<li><a href="#">抽奖</a></li>
-			</ul>
-		</div>
-	</div>
+{% if sections %}
+<div class="center_con clearfix" id="catalog">
+    <ul class="subnav fl">
+        {% for section in sections %}
+        <li><a href="#{{ section.anchor }}" class="{{ section.icon_class }}">{{ section.type.ttitle }}</a></li>
+        {% endfor %}
+    </ul>
+    <div class="slide fl">
+        <ul class="slide_pics">
+            <li><img src="/static/images/slide.jpg" alt="校园鲜达活动"></li>
+            <li><img src="/static/images/slide02.jpg" alt="校园鲜达活动"></li>
+            <li><img src="/static/images/slide03.jpg" alt="校园鲜达活动"></li>
+            <li><img src="/static/images/slide04.jpg" alt="校园鲜达活动"></li>
+        </ul>
+        <div class="prev"></div>
+        <div class="next"></div>
+        <ul class="points"></ul>
+    </div>
+    <div class="adv fl">
+        <a href="#"><img src="/static/images/adv01.jpg" alt="校园优选"></a>
+        <a href="#"><img src="/static/images/adv02.jpg" alt="新鲜配送"></a>
+    </div>
+</div>
 
-	<div class="center_con clearfix">
-		<ul class="subnav fl">
-			<li><a href="#model01" class="fruit">新鲜水果</a></li>
-			<li><a href="#model02" class="seafood">海鲜水产</a></li>
-			<li><a href="#model03" class="meet">猪牛羊肉</a></li>
-			<li><a href="#model04" class="egg">禽类蛋品</a></li>
-			<li><a href="#model05" class="vegetables">新鲜蔬菜</a></li>
-			<li><a href="#model06" class="ice">速冻食品</a></li>
-		</ul>
-		<div class="slide fl">
-			<ul class="slide_pics">
-				<li><img src="/static/images/slide.jpg" alt="幻灯片"></li>
-				<li><img src="/static/images/slide02.jpg" alt="幻灯片"></li>
-				<li><img src="/static/images/slide03.jpg" alt="幻灯片"></li>
-				<li><img src="/static/images/slide04.jpg" alt="幻灯片"></li>
-			</ul>
-			<div class="prev"></div>
-			<div class="next"></div>
-			<ul class="points"></ul>
-		</div>
-		<div class="adv fl">
-			<a href="#"><img src="/static/images/adv01.jpg"></a>
-			<a href="#"><img src="/static/images/adv02.jpg"></a>
-		</div>
-	</div>
-
-	<div class="list_model">
-		<div class="list_title clearfix">
-			<h3 class="fl" id="model01">新鲜水果</h3>
-			<div class="subtitle fl">
-				<span>|</span>
-{#				<a href="#">鲜芒</a>#}
-{#				<a href="#">加州提子</a>#}
-{#				<a href="#">亚马逊牛油果</a>#}
-                {% for g in type01 %}
-                    <a href="/{{ g.id }}/">{{  g.gtitle|slice:'10' }}</a>
-{#                    这里建立一个点击量前四位的商品的链接#}
-{#                    模板过滤器slice, 取变量前 N 个字符，可用于中文 #}
-                {%  endfor %}
-			</div>
-			<a href="/list1_1_1/" class="goods_more fr" id="fruit_more">查看更多 ></a>
-		</div>
-
-		<div class="goods_con clearfix">
-			<div class="goods_banner fl"><img src="/static/images/banner01.jpg"></div>
-			<ul class="goods_list fl">
-{#				<li>#}
-{#					<h4><a href="#">草莓</a></h4>#}
-{#					<a href="#"><img src="/static/df_goods/goods003.jpg"></a>#}
-{#					<div class="prize">¥ 30.00</div>#}
-{#				</li>#}
-                {% for goods in type0 %}
-{#                    按照商品的最新上穿建立显示#}
-                <li>
-                    <h4><a href="/{{ goods.id }}/">{{ goods.gtitle }}</a></h4>
-                    <a href="/{{ goods.id }}/"><img src="{{ MEDIA_URL }}{{ goods.gpic }}"></a>
-                    <div class="prize"> ￥ {{ goods.gprice }} </div>
-                </li>
-                {% endfor %}
-			</ul>
-		</div>
-	</div>
-
-	<div class="list_model">
-		<div class="list_title clearfix">
-			<h3 class="fl" id="model02">海鲜水产</h3>
-			<div class="subtitle fl">
-				<span>|</span>
-{#				<a href="#">河虾</a>#}
-{#				<a href="#">扇贝</a>				#}
-                {% for g in type1 %}
-                    <a href="/{{ g.id }}/">{{ g.gtitle|slice:'10' }}</a>
-                {% endfor %}
-			</div>
-			<a href="/list2_1_1/" class="goods_more fr">查看更多 ></a>
-		</div>
-
-		<div class="goods_con clearfix">
-			<div class="goods_banner fl"><img src="/static/images/banner02.jpg"></div>
-			<ul class="goods_list fl">
-                {% for goods in type11 %}
-                <li>
-                    <h4><a href="/{{ goods.id }}/">{{ goods.gtitle }}</a></h4>
-                    <a href="/{{ goods.id }}/"><img src="{{ MEDIA_URL }}{{ goods.gpic }}"></a>
-{#                    静态文件添加目录static前一定加"/"#}
-                    <div class="prize"> ￥ {{ goods.gprice }} </div>
-                </li>
-                {% endfor %}
-			</ul>
-		</div>
-	</div>
-
-	<div class="list_model">
-		<div class="list_title clearfix">
-			<h3 class="fl" id="model03">猪牛羊肉</h3>
-			<div class="subtitle fl">
-				<span>|</span>
-				<a href="#">鲜芒</a>
-				<a href="#">加州提子</a>
-				<a href="#">亚马逊牛油果</a>
-			</div>
-			<a href="#" class="goods_more fr">查看更多 ></a>
-		</div>
-
-		<div class="goods_con clearfix">
-			<div class="goods_banner fl"><img src="/static/images/banner03.jpg"></div>
-			<ul class="goods_list fl">
-				<li>
-					<h4><a href="#">维多利亚葡萄维多利亚葡萄维多利亚葡萄维多利亚葡萄</a></h4>
-					<a href="#"><img src="/static/images/goods.jpg"></a>
-					<div class="prize">¥ 38.00</div>
-				</li>
-				<li>
-					<h4><a href="#">维多利亚葡萄</a></h4>
-					<a href="#"><img src="/static/images/goods.jpg"></a>
-					<div class="prize">¥ 38.00</div>
-				</li>
-				<li>
-					<h4><a href="#">维多利亚葡萄</a></h4>
-					<a href="#"><img src="/static/images/goods.jpg"></a>
-					<div class="prize">¥ 38.00</div>
-				</li>
-				<li>
-					<h4><a href="#">维多利亚葡萄</a></h4>
-					<a href="#"><img src="/static/images/goods.jpg"></a>
-					<div class="prize">¥ 38.00</div>
-				</li>
-			</ul>
-		</div>
-
-	</div>
-
-	<div class="list_model">
-		<div class="list_title clearfix">
-			<h3 class="fl" id="model04">禽类蛋品</h3>
-			<div class="subtitle fl">
-				<span>|</span>
-				<a href="#">鲜芒</a>
-				<a href="#">加州提子</a>
-				<a href="#">亚马逊牛油果</a>
-			</div>
-			<a href="#" class="goods_more fr">查看更多 ></a>
-		</div>
-
-		<div class="goods_con clearfix">
-			<div class="goods_banner fl"><img src="/static/images/banner04.jpg"></div>
-			<ul class="goods_list fl">
-				<li>
-					<h4><a href="#">维多利亚葡萄维多利亚葡萄维多利亚葡萄维多利亚葡萄</a></h4>
-					<a href="#"><img src="/static/images/goods.jpg"></a>
-					<div class="prize">¥ 38.00</div>
-				</li>
-				<li>
-					<h4><a href="#">维多利亚葡萄</a></h4>
-					<a href="#"><img src="/static/images/goods.jpg"></a>
-					<div class="prize">¥ 38.00</div>
-				</li>
-				<li>
-					<h4><a href="#">维多利亚葡萄</a></h4>
-					<a href="#"><img src="/static/images/goods.jpg"></a>
-					<div class="prize">¥ 38.00</div>
-				</li>
-				<li>
-					<h4><a href="#">维多利亚葡萄</a></h4>
-					<a href="#"><img src="/static/images/goods.jpg"></a>
-					<div class="prize">¥ 38.00</div>
-				</li>
-			</ul>
-		</div>
-	</div>
-
-	<div class="list_model">
-		<div class="list_title clearfix">
-			<h3 class="fl" id="model05">新鲜蔬菜</h3>
-			<div class="subtitle fl">
-				<span>|</span>
-				<a href="#">鲜芒</a>
-				<a href="#">加州提子</a>
-				<a href="#">亚马逊牛油果</a>
-			</div>
-			<a href="#" class="goods_more fr">查看更多 ></a>
-		</div>
-
-		<div class="goods_con clearfix">
-			<div class="goods_banner fl"><img src="/static/images/banner05.jpg"></div>
-			<ul class="goods_list fl">
-				<li>
-					<h4><a href="#">维多利亚葡萄维多利亚葡萄维多利亚葡萄维多利亚葡萄</a></h4>
-					<a href="#"><img src="/static/images/goods.jpg"></a>
-					<div class="prize">¥ 38.00</div>
-				</li>
-				<li>
-					<h4><a href="#">维多利亚葡萄</a></h4>
-					<a href="#"><img src="/static/images/goods.jpg"></a>
-					<div class="prize">¥ 38.00</div>
-				</li>
-				<li>
-					<h4><a href="#">维多利亚葡萄</a></h4>
-					<a href="#"><img src="/static/images/goods.jpg"></a>
-					<div class="prize">¥ 38.00</div>
-				</li>
-				<li>
-					<h4><a href="#">维多利亚葡萄</a></h4>
-					<a href="#"><img src="/static/images/goods.jpg"></a>
-					<div class="prize">¥ 38.00</div>
-				</li>
-			</ul>
-		</div>
-	</div>
-
-	<div class="list_model">
-		<div class="list_title clearfix">
-			<h3 class="fl" id="model06">速冻食品</h3>
-			<div class="subtitle fl">
-				<span>|</span>
-				<a href="#">鲜芒</a>
-				<a href="#">加州提子</a>
-				<a href="#">亚马逊牛油果</a>
-			</div>
-			<a href="#" class="goods_more fr">查看更多 ></a>
-		</div>
-
-		<div class="goods_con clearfix">
-			<div class="goods_banner fl"><img src="/static/images/banner06.jpg"></div>
-			<ul class="goods_list fl">
-				<li>
-					<h4><a href="#">维多利亚葡萄维多利亚葡萄维多利亚葡萄维多利亚葡萄</a></h4>
-					<a href="#"><img src="/static/images/goods.jpg"></a>
-					<div class="prize">¥ 38.00</div>
-				</li>
-				<li>
-					<h4><a href="#">维多利亚葡萄</a></h4>
-					<a href="#"><img src="/static/images/goods.jpg"></a>
-					<div class="prize">¥ 38.00</div>
-				</li>
-				<li>
-					<h4><a href="#">维多利亚葡萄</a></h4>
-					<a href="#"><img src="/static/images/goods.jpg"></a>
-					<div class="prize">¥ 38.00</div>
-				</li>
-				<li>
-					<h4><a href="#">维多利亚葡萄</a></h4>
-					<a href="#"><img src="/static/images/goods.jpg"></a>
-					<div class="prize">¥ 38.00</div>
-				</li>
-			</ul>
-		</div>
-	</div>
-
-	<script type="text/javascript" src="/static/js/slide.js"></script>
-    <script type="text/javascript">
-        BCSlideshow('focuspic');
-        var oFruit = document.getElementById('fruit_more');
-        var oShownum = document.getElementById('show_count');
-
-        var hasorder = localStorage.getItem('order_finish');
-
-        if(hasorder)
-        {
-        oShownum.innerHTML = '2';
-        }
-
-        oFruit.onclick = function(){
-        window.location.href = 'list.html';
-        }
-    </script>
-
+{% for section in sections %}
+<div class="list_model">
+    <div class="list_title clearfix">
+        <h3 class="fl" id="{{ section.anchor }}">{{ section.type.ttitle }}</h3>
+        <div class="subtitle fl">
+            <span>|</span>
+            {% for goods in section.popular_goods %}
+            <a href="{% url 'df_goods:detail' goods.id %}">{{ goods.gtitle|slice:'10' }}</a>
+            {% empty %}
+            <span>商品正在上架</span>
+            {% endfor %}
+        </div>
+        <a href="{% url 'df_goods:good_list' section.type.id 1 1 %}" class="goods_more fr">查看更多 &gt;</a>
+    </div>
+    <div class="goods_con clearfix">
+        <div class="goods_banner fl"><img src="/static/images/{{ section.banner }}" alt="{{ section.type.ttitle }}"></div>
+        <ul class="goods_list fl">
+            {% for goods in section.latest_goods %}
+            <li>
+                <h4><a href="{% url 'df_goods:detail' goods.id %}">{{ goods.gtitle }}</a></h4>
+                <a href="{% url 'df_goods:detail' goods.id %}"><img src="{{ MEDIA_URL }}{{ goods.gpic }}" alt="{{ goods.gtitle }}"></a>
+                <div class="prize">￥ {{ goods.gprice }}</div>
+            </li>
+            {% empty %}
+            <li class="category_empty">本分类商品正在上架中</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endfor %}
+{% else %}
+<section class="empty_catalog" id="catalog">
+    <div class="empty_catalog_copy">
+        <span class="empty_catalog_badge">校园鲜达 · 新鲜启程</span>
+        <h2>新鲜到校，美好每一天</h2>
+        <p>商城环境已经准备完成，商品分类和校园优选商品正在上架中。</p>
+        <div class="empty_catalog_actions">
+            <a class="primary_action" href="{% url 'df_user:register' %}">注册校园账户</a>
+            <a class="secondary_action" href="/admin/">进入管理后台</a>
+        </div>
+    </div>
+    <img src="/static/images/campus_fresh_empty.png" alt="校园生鲜配送插画">
+</section>
+<section class="service_strip" id="service">
+    <div><strong>校内优选</strong><span>面向校园生活精选商品</span></div>
+    <div><strong>新鲜到校</strong><span>支持后续扩展配送与自提</span></div>
+    <div><strong>质量可追踪</strong><span>测试、缺陷与改进全程留痕</span></div>
+</section>
+{% endif %}
 {% endblock center_body %}
